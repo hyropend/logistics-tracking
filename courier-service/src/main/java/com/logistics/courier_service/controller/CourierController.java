@@ -4,6 +4,7 @@ import com.logistics.courier_service.dto.CourierLocationEvent;
 import com.logistics.courier_service.dto.LocationUpdateRequest;
 import com.logistics.courier_service.dto.StatusUpdateRequest;
 import com.logistics.courier_service.entity.Courier;
+import com.logistics.courier_service.enums.CourierStatus;
 import com.logistics.courier_service.kafka.CourierEventProducer;
 import com.logistics.courier_service.repository.CourierRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,8 @@ public class CourierController {
     }
 
     public ResponseEntity<List<Courier>> getCouriersByStatus(@PathVariable String status) {
-        return ResponseEntity.ok(courierRepository.findByStatus(status));
+        CourierStatus courierStatus = CourierStatus.valueOf(status.toUpperCase());
+        return ResponseEntity.ok(courierRepository.findByStatus(courierStatus));
     }
 
     // Yeni kurye oluştur
